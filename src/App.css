@@ -1,33 +1,177 @@
-.App {
-  text-align: center;
+*, *:before, *:after {
+  position: relative;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FAFAFA;
+}
+
+* {
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.4, 1);
+}
+
+.ui-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40rem;
+  max-width: 90vw;
+  height: calc(100vh - 2rem);
+}
+.ui-app[data-state="start"] {
+  justify-content: center;
+}
+.ui-app[data-state="loading"] .ui-item {
+  opacity: .5;
+}
+.ui-app[data-state="photo"] * {
+  opacity: 0.3;
+}
+.ui-app[data-state="photo"] .ui-photo-detail, .ui-app[data-state="photo"] .ui-photo-detail * {
+  opacity: 1;
+}
+.ui-app[data-state="photo"] .ui-items {
+  pointer-events: none;
+}
+.ui-app:after {
+  content: "current state: " attr(data-state);
+  position: absolute;
+  bottom: .5rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 1rem;
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  text-shadow: 0 0 .1rem black;
   pointer-events: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.ui-form {
+  margin-bottom: 1rem;
+}
+
+.ui-input {
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  display: block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  border: none;
+  font-size: 2rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+.ui-input::-webkit-input-placeholder {
+  color: #CDCDCD;
+}
+.ui-input:focus {
+  outline: none;
+}
+
+.ui-buttons {
+  text-align: center;
+}
+
+.ui-button {
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: #EB7452;
   color: white;
+  height: 3rem;
+  padding: 0 3rem;
+  border-radius: 3rem;
+  margin: 0 1rem;
+}
+.ui-button[disabled] {
+  opacity: 0.5;
+}
+.ui-button[type="button"] {
+  background-color: #555;
 }
 
-.App-link {
-  color: #61dafb;
+.ui-items {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  flex-shrink: 1;
+  overflow-y: scroll;
+  margin: 0 -.25rem;
+}
+.ui-items:hover > .ui-item {
+  opacity: 0.7;
+}
+.ui-items:hover > .ui-item:hover {
+  opacity: 1;
 }
 
-@keyframes App-logo-spin {
+.ui-item {
+  display: block;
+  height: 10rem;
+  width: auto;
+  flex-shrink: 0;
+  flex-grow: 0;
+  margin: .25rem;
+  -webkit-animation: item 0.5s calc(var(--i, 0) * .05s) cubic-bezier(0.5, 0, 0.2, 1) both;
+  animation: item 0.5s calc(var(--i, 0) * .05s) cubic-bezier(0.5, 0, 0.2, 1) both;
+  background-color: #EEE;
+}
+@-webkit-keyframes item {
   from {
-    transform: rotate(0deg);
+    -webkit-transform: scale(0);
+    transform: scale(0);
   }
   to {
-    transform: rotate(360deg);
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
+}
+@keyframes item {
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.ui-photo-detail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui-photo {
+  height: auto;
+  width: auto;
+  min-height: 50vh;
+  min-width: 50vw;
+  max-height: 100%;
+  max-width: 100%;
 }
